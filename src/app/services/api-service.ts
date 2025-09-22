@@ -8,21 +8,21 @@ import { ILogin } from '../interfaces/interfaces';
   providedIn: 'root',
 })
 export class ApiService {
-  private readonly API_URL = 'https://be-12092025.onrender.com/api';
+  private readonly API_URL = 'https://be-12092025.onrender.com';
   constructor(private http: HttpClient, public router: Router) {}
 
   getLogin(prop: ILogin) {
     this.http
       .post(this.API_URL + '/auth/login', prop)
       .pipe(retry(4))
-      .subscribe(
-        (response) => {
+      .subscribe({
+        next: (response) => {
           console.log(response);
           this.router.navigate(['home']);
         },
-        (error) => {
+        error: (error) => {
           console.error('Login failed', error.status);
-        }
-      );
+        },
+      });
   }
 }
