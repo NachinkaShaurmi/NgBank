@@ -18,7 +18,7 @@ export class ApiService {
       .subscribe({
         next: (response) => {
           console.log(response);
-          this.router.navigate(['home']);
+          this.router.navigate(['app/home']);
         },
         error: (error) => {
           console.error('Login failed', error.status);

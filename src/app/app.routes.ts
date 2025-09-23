@@ -9,12 +9,24 @@ export const routes: Routes = [
     title: 'Login',
   },
   {
-    path: 'home',
-    loadComponent: () =>
-      import('./components/personal-account/personal-account').then(
-        (r) => r.PersonalAccount
-      ),
-    title: 'Home',
+    path: '',
+    loadComponent: () => import('./layout/layout').then((r) => r.Layout),
+    children: [
+      {
+        path: 'home',
+        loadComponent: () =>
+          import('./components/personal-account/personal-account').then(
+            (r) => r.PersonalAccount
+          ),
+        title: 'Home',
+      },
+      {
+        path: 'profile',
+        loadComponent: () =>
+          import('./components/profile/profile').then((r) => r.Profile),
+        title: 'Home',
+      },
+    ],
   },
   {
     path: '**',
