@@ -15,14 +15,33 @@ export class ApiService {
     this.http
       .post(this.API_URL + '/auth/login', prop)
       .pipe(retry(4))
-      .subscribe({
-        next: (response) => {
-          console.log(response);
-          this.router.navigate(['home']);
+      .subscribe(
+        (response) => {
+          console.log(Object.values(response));
+          // this.router.navigate(['home']);
+          this.getUser(Object.values(response)[0], Object.values(response)[2]);
         },
-        error: (error) => {
+        (error) => {
           console.error('Login failed', error.status);
+        }
+      );
+  }
+
+  getUser(token: string, id: string) {
+    this.http
+      .get(this.API_URL + '/user/' + id, {
+        headers: { Authorization: `Bearer ${token}` },
+      })
+      .pipe(retry(4))
+      .subscribe(
+        (response) => {
+          console.log(id);
+          console.log(response);
         },
-      });
+        (error) => {
+          console.log(id);
+          console.error('User not found', error.status);
+        }
+      );
   }
 }

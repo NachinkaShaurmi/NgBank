@@ -1,4 +1,5 @@
 import { Routes } from '@angular/router';
+import { Auth } from './services/auth';
 
 export const routes: Routes = [
   { path: '', redirectTo: 'login', pathMatch: 'full' },
@@ -14,6 +15,7 @@ export const routes: Routes = [
       import('./components/personal-account/personal-account').then(
         (r) => r.PersonalAccount
       ),
+    canActivate: [Auth],
     title: 'Home',
   },
   {

@@ -1,0 +1,28 @@
+:host {
+  background-color: #232533;
+  color: #ffffff;
+  font-size: 1.5vw;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  width: 100%;
+  height: 100vh;
+  h1 {
+    font-size: 3vw;
+  }
+  p {
+    color: #a2a2a7;
+  }
+  form {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    gap: 3vw;
+  }
+  a {
+    text-decoration: none;
+    color: #0066ff;
+  }
+}
