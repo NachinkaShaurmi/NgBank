@@ -1,5 +1,5 @@
 import { Routes } from '@angular/router';
-import {SignUp} from './components/sign-up/sign-up';
+import { SignUp } from './components/sign-up/sign-up';
 
 export const routes: Routes = [
   { path: '', redirectTo: 'login', pathMatch: 'full' },
@@ -12,18 +12,28 @@ export const routes: Routes = [
   {
     path: 'sign-up',
     loadComponent: () =>
-      import('./components/sign-up/sign-up').then(
-        (r) => r.SignUp
-      ),
+      import('./components/sign-up/sign-up').then((r) => r.SignUp),
     title: 'SignUp',
   },
   {
-    path: 'home',
-    loadComponent: () =>
-      import('./components/personal-account/personal-account').then(
-        (r) => r.PersonalAccount
-      ),
-    title: 'Home',
+    path: '',
+    loadComponent: () => import('./layout/layout').then((r) => r.Layout),
+    children: [
+      {
+        path: 'home',
+        loadComponent: () =>
+          import('./components/personal-account/personal-account').then(
+            (r) => r.PersonalAccount
+          ),
+        title: 'Home',
+      },
+      {
+        path: 'profile',
+        loadComponent: () =>
+          import('./components/profile/profile').then((r) => r.Profile),
+        title: 'Profile',
+      },
+    ],
   },
   {
     path: '**',
