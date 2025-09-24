@@ -1,6 +1,5 @@
 import { Injectable, inject } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
-
 import { retry } from 'rxjs';
 import { ILogin } from '../interfaces/interfaces';
 import { Storage } from './storage';
@@ -10,10 +9,9 @@ import { Storage } from './storage';
 })
 export class ApiService {
   private readonly API_URL = 'https://be-12092025.onrender.com';
-  constructor(
-    private http: HttpClient,
+    private http: HttpClient=inject(HttpClient);
     public storage: Storage = inject(Storage)
-  ) {}
+
 
   getLogin(prop: ILogin) {
     this.http
