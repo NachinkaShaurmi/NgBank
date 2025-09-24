@@ -23,12 +23,14 @@ export class Storage {
       typeof window !== 'undefined' && localStorage.getItem('token') !== null
     );
   }
-  setToken(token: string): void {
-    localStorage.setItem('token', token);
+  setToken(arr: Array<string>): void {
+    localStorage.setItem('token', arr[0]);
+    localStorage.setItem('id', arr[2]);
     this.router.navigate(['home']);
   }
   removeToken(): void {
     localStorage.removeItem('token');
+    localStorage.removeItem('id');
   }
   getData(d: IUser[]) {
     this.newData.next(d);

@@ -1,7 +1,7 @@
 import { Injectable, inject } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { retry } from 'rxjs';
-import { ILogin } from '../interfaces/interfaces';
+import { ILogin, IUser } from '../interfaces/interfaces';
 import { Storage } from './storage';
 
 @Injectable({
@@ -9,9 +9,8 @@ import { Storage } from './storage';
 })
 export class ApiService {
   private readonly API_URL = 'https://be-12092025.onrender.com';
-    private http: HttpClient=inject(HttpClient);
-    public storage: Storage = inject(Storage)
-
+  private http: HttpClient = inject(HttpClient);
+  public storage: Storage = inject(Storage);
 
   getLogin(prop: ILogin) {
     this.http
@@ -19,8 +18,7 @@ export class ApiService {
       .pipe(retry(4))
       .subscribe(
         (response) => {
-          // console.log(Object.values(response));
-          this.storage.setToken(Object.values(response)[0]);
+          this.storage.setToken(Object.values(response));
           this.getUser(Object.values(response)[2]);
         },
         (error) => {
@@ -31,14 +29,14 @@ export class ApiService {
 
   getUser(id: string) {
     this.http
-      .get(this.API_URL + '/user/' + id, {
+      .get<IUser[]>(this.API_URL + '/user/' + id, {
         headers: { Authorization: `Bearer ${this.storage.token}` },
       })
       .pipe(retry(4))
       .subscribe(
         (response) => {
-          console.log(response);
-          this.storage.getData(Object.values(response))
+          const data = response;
+          this.storage.getData(data);
         },
         (error) => {
           console.error('User not found', error.status);
