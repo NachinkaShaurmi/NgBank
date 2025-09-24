@@ -1,4 +1,4 @@
-import { Injectable } from '@angular/core';
+import { Injectable, inject } from '@angular/core';
 import { Router } from '@angular/router';
 import { BehaviorSubject } from 'rxjs';
 import { IUser } from '../interfaces/interfaces';
@@ -9,7 +9,7 @@ import { IUser } from '../interfaces/interfaces';
 export class Storage {
   newData = new BehaviorSubject<IUser[]>([]);
   currentData = this.getNewData().asObservable();
-  constructor(public router: Router) {}
+  public router: Router = inject(Router);
 
   token = this.getToken();
   getToken(): string {
@@ -23,7 +23,7 @@ export class Storage {
       typeof window !== 'undefined' && localStorage.getItem('token') !== null
     );
   }
-  setToken(arr: Array<string>): void {
+  setToken(arr: string[]): void {
     localStorage.setItem('token', arr[0]);
     localStorage.setItem('id', arr[2]);
     this.router.navigate(['home']);

@@ -7,7 +7,7 @@ import { Storage } from './storage';
 })
 export class Auth implements CanActivate {
   isLogin: Storage = inject(Storage);
-  constructor(private router: Router) {}
+  router: Router = inject(Router);
 
   canActivate(): boolean | UrlTree {
     if (this.isLogin.isActive()) {
