@@ -9,6 +9,12 @@ export const routes: Routes = [
     title: 'Login',
   },
   {
+    path: 'sign-up',
+    loadComponent: () =>
+      import('./components/sign-up/sign-up').then((r) => r.SignUp),
+    title: 'SignUp',
+  },
+  {
     path: '',
     loadComponent: () => import('./layout/layout').then((r) => r.Layout),
     children: [
@@ -24,7 +30,7 @@ export const routes: Routes = [
         path: 'profile',
         loadComponent: () =>
           import('./components/profile/profile').then((r) => r.Profile),
-        title: 'Home',
+        title: 'Profile',
       },
     ],
   },
