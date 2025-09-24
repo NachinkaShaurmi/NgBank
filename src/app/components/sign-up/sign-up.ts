@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+import { Component, inject } from '@angular/core';
 import {FormBuilder, FormGroup, ReactiveFormsModule, Validators} from '@angular/forms';
 import {Router, RouterLink} from '@angular/router';
 import {UserService} from '../../services/user.service';
@@ -13,20 +13,16 @@ import {UserService} from '../../services/user.service';
   styleUrl: './sign-up.scss'
 })
 export class SignUp {
-  userForm: FormGroup;
-
-  constructor(
-    private fb: FormBuilder,
-    private userService: UserService,
-    private router: Router
-  ) {
-    this.userForm = this.fb.group({
-      name: ['', [Validators.required]],
-      login: ['', [Validators.required]],
-      email: ['', [Validators.required, Validators.email]],
-      password: ['', Validators.required],
-    });
-  }
+  private fb = inject(FormBuilder);
+  private userService = inject(UserService);
+  private router = inject(Router);
+  
+  userForm: FormGroup = this.fb.group({
+    name: ['', [Validators.required]],
+    login: ['', [Validators.required]],
+    email: ['', [Validators.required, Validators.email]],
+    password: ['', Validators.required],
+  });
 
   submitUser() {
     if (this.userForm.valid) {
