@@ -1,0 +1,26 @@
+<h1 mat-dialog-title>Create New Account</h1>
+<div mat-dialog-content class="dialog-content">
+  <form [formGroup]="accountForm">
+    <mat-form-field appearance="outline">
+      <mat-label>Account Name</mat-label>
+      <input matInput formControlName="name" placeholder="Enter account name">
+    </mat-form-field>
+    
+    <mat-form-field appearance="outline">
+      <mat-label>Currency</mat-label>
+      <mat-select formControlName="currency">
+        <mat-option value="USD">USD</mat-option>
+        <mat-option value="EUR">EUR</mat-option>
+      </mat-select>
+    </mat-form-field>
+    
+    <mat-form-field appearance="outline">
+      <mat-label>Initial Balance</mat-label>
+      <input matInput type="number" formControlName="balance" placeholder="0.00">
+    </mat-form-field>
+  </form>
+</div>
+<div mat-dialog-actions>
+  <button mat-button (click)="onCancel()">Cancel</button>
+  <button mat-raised-button color="primary" (click)="onCreate()" [disabled]="!accountForm.valid">Create</button>
+</div>
