@@ -1,6 +1,7 @@
 import { Component, inject } from '@angular/core';
 import { FormBuilder, Validators, ReactiveFormsModule } from '@angular/forms';
 import { ApiService } from '../../services/api-service';
+import { Storage } from '../../services/storage';
 
 @Component({
   selector: 'app-login',
@@ -11,6 +12,7 @@ import { ApiService } from '../../services/api-service';
 export class Login {
   private fb: FormBuilder = inject(FormBuilder);
   apiService: ApiService = inject(ApiService);
+  storage: Storage = inject(Storage);
 
   loginForm = this.fb.nonNullable.group({
     login: ['', Validators.required],
@@ -18,6 +20,7 @@ export class Login {
   });
 
   onSubmit() {
+    this.storage.removeToken();
     if (this.loginForm.valid) {
       this.apiService.getLogin(this.loginForm.getRawValue());
     }
