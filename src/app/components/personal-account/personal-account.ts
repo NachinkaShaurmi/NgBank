@@ -8,6 +8,7 @@ import { CommonModule } from '@angular/common';
 import { CreateAccountDialog } from '../create-account-dialog/create-account-dialog';
 import { switchMap, forkJoin } from 'rxjs';
 import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
+import { Storage } from '../../services/storage';
 
 @Component({
   selector: 'app-personal-account',
@@ -19,9 +20,9 @@ export class PersonalAccount {
   private apiService = inject(ApiService);
   private router = inject(Router);
   private dialog = inject(MatDialog);
+  private storage = inject(Storage);
 
-  private userId = '9871f1d7-b579-4fe3-985f-d2730662cbe4'; // TODO get from auth
-
+  private userId = this.storage.getUserId();
   readonly user = signal<User | null>(null);
   readonly accounts = signal<Account[]>([]);
   readonly loading = signal(true);
