@@ -1,8 +1,8 @@
 import { Component, inject, signal } from '@angular/core';
 import { FormBuilder, Validators, ReactiveFormsModule } from '@angular/forms';
 import { Router, RouterLink } from '@angular/router';
-import { ApiService } from '../../services/api-service';
-import { Storage } from '../../services/storage';
+import { ApiService } from '../../services/api/api-service';
+import { Storage } from '../../services/storage/storage';
 
 @Component({
   selector: 'app-login',

@@ -1,14 +1,14 @@
 import { Component, inject, signal } from '@angular/core';
 import { Router } from '@angular/router';
 import { MatDialog } from '@angular/material/dialog';
-import { ApiService } from '../../services/api-service';
+import { ApiService } from '../../services/api/api-service';
 import { User, Account } from '../../interfaces/interfaces';
 import { MaterialModule } from '../../material/material-module';
 import { CommonModule } from '@angular/common';
 import { CreateAccountDialog } from '../create-account-dialog/create-account-dialog';
 import { switchMap, forkJoin } from 'rxjs';
 import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
-import { Storage } from '../../services/storage';
+import { Storage } from '../../services/storage/storage';
 
 @Component({
   selector: 'app-personal-account',

@@ -7,8 +7,8 @@ import {
   Account,
   CreateAccountDto,
   LoginResponse,
-} from '../interfaces/interfaces';
-import { Storage } from './storage';
+} from '../../interfaces/interfaces';
+import { Storage } from '../storage/storage';
 
 @Injectable({
   providedIn: 'root',
