@@ -26,14 +26,12 @@ export const routes: Routes = [
             (r) => r.PersonalAccount
           ),
         canActivate: [Auth],
-        canActivate: [Auth],
         title: 'Home',
       },
       {
         path: 'profile',
         loadComponent: () =>
           import('./components/profile/profile').then((r) => r.Profile),
-        canActivate: [Auth],
         canActivate: [Auth],
         title: 'Profile',
       },
