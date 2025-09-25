@@ -1,4 +1,4 @@
-import { Component, inject, signal } from '@angular/core';
+import { Component, DestroyRef, inject, signal } from '@angular/core';
 import { Router } from '@angular/router';
 import { MatDialog } from '@angular/material/dialog';
 import { ApiService } from '../../services/api/api-service';
@@ -32,6 +32,8 @@ export class PersonalAccount {
     this.loadData();
   }
 
+  private destroyRef = inject(DestroyRef);
+
   private loadData() {
     forkJoin({
       user: this.apiService.getUser(this.userId),
@@ -52,10 +54,13 @@ export class PersonalAccount {
   }
 
   private loadAccounts() {
-    this.apiService.getUserAccounts(this.userId).subscribe({
-      next: (accounts) => this.accounts.set(accounts),
-      error: () => this.error.set('Failed to load accounts'),
-    });
+    this.apiService
+      .getUserAccounts(this.userId)
+      .pipe(takeUntilDestroyed(this.destroyRef))
+      .subscribe({
+        next: (accounts) => this.accounts.set(accounts),
+        error: () => this.error.set('Failed to load accounts'),
+      });
   }
 
   onAccountClick(accountId: string) {
@@ -71,7 +76,8 @@ export class PersonalAccount {
           result
             ? this.apiService.createAccount({ userId: this.userId, ...result })
             : []
-        )
+        ),
+        takeUntilDestroyed(this.destroyRef)
       )
       .subscribe(() => this.loadAccounts());
   }

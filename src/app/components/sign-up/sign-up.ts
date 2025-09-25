@@ -1,4 +1,4 @@
-import { Component, inject } from '@angular/core';
+import { Component, DestroyRef, inject } from '@angular/core';
 import {
   FormBuilder,
   FormGroup,
@@ -6,6 +6,7 @@ import {
   Validators,
 } from '@angular/forms';
 import { Router, RouterLink } from '@angular/router';
+import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
 import { UserService } from '../../services/user/user.service';
 
 @Component({
@@ -18,6 +19,7 @@ export class SignUp {
   private fb = inject(FormBuilder);
   private userService = inject(UserService);
   private router = inject(Router);
+  private destroyRef = inject(DestroyRef);
 
   userForm: FormGroup = this.fb.group({
     name: ['', [Validators.required]],
@@ -28,12 +30,15 @@ export class SignUp {
 
   submitUser() {
     if (this.userForm.valid) {
-      this.userService.postUser(this.userForm.value).subscribe({
-        next: () => {
-          this.router.navigate(['/login']);
-        },
-        error: () => alert('sing in failed'),
-      });
+      this.userService
+        .postUser(this.userForm.value)
+        .pipe(takeUntilDestroyed(this.destroyRef))
+        .subscribe({
+          next: () => {
+            this.router.navigate(['/login']);
+          },
+          error: () => alert('sing in failed'),
+        });
     }
   }
 }

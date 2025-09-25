@@ -1,6 +1,7 @@
-import { Component, inject, signal } from '@angular/core';
+import { Component, inject, signal, DestroyRef } from '@angular/core';
 import { FormBuilder, Validators, ReactiveFormsModule } from '@angular/forms';
 import { Router, RouterLink } from '@angular/router';
+import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
 import { ApiService } from '../../services/api/api-service';
 import { Storage } from '../../services/storage/storage';
 
@@ -15,6 +16,7 @@ export class Login {
   private apiService = inject(ApiService);
   private storage = inject(Storage);
   private router = inject(Router);
+  private destroyRef = inject(DestroyRef);
 
   loading = signal(false);
   error = signal<string | null>(null);
@@ -30,19 +32,22 @@ export class Login {
     this.loading.set(true);
     this.error.set(null);
 
-    this.apiService.login(this.loginForm.getRawValue()).subscribe({
-      next: (response) => {
-        this.storage.setTokens(
-          response.accessToken,
-          response.refreshToken,
-          response.userId
-        );
-        this.router.navigate(['/home']);
-      },
-      error: () => {
-        this.error.set('Login failed. Please check your credentials.');
-        this.loading.set(false);
-      },
-    });
+    this.apiService
+      .login(this.loginForm.getRawValue())
+      .pipe(takeUntilDestroyed(this.destroyRef))
+      .subscribe({
+        next: (response) => {
+          this.storage.setTokens(
+            response.accessToken,
+            response.refreshToken,
+            response.userId
+          );
+          this.router.navigate(['/home']);
+        },
+        error: () => {
+          this.error.set('Login failed. Please check your credentials.');
+          this.loading.set(false);
+        },
+      });
   }
 }
