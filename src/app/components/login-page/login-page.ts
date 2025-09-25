@@ -1,8 +1,9 @@
-import { Component, inject } from '@angular/core';
+import { Component, inject, signal, DestroyRef } from '@angular/core';
 import { FormBuilder, Validators, ReactiveFormsModule } from '@angular/forms';
-import { RouterLink } from '@angular/router';
-import { ApiService } from '../../services/api-service';
-import { Storage } from '../../services/storage';
+import { Router, RouterLink } from '@angular/router';
+import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
+import { ApiService } from '../../services/api/api-service';
+import { Storage } from '../../services/storage/storage';
 
 @Component({
   selector: 'app-login',
@@ -11,9 +12,14 @@ import { Storage } from '../../services/storage';
   styleUrl: './login-page.scss',
 })
 export class Login {
-  private fb: FormBuilder = inject(FormBuilder);
-  apiService: ApiService = inject(ApiService);
-  storage: Storage = inject(Storage);
+  private fb = inject(FormBuilder);
+  private apiService = inject(ApiService);
+  private storage = inject(Storage);
+  private router = inject(Router);
+  private destroyRef = inject(DestroyRef);
+
+  loading = signal(false);
+  error = signal<string | null>(null);
 
   loginForm = this.fb.nonNullable.group({
     login: ['', Validators.required],
@@ -21,9 +27,27 @@ export class Login {
   });
 
   onSubmit() {
-    this.storage.removeToken();
-    if (this.loginForm.valid) {
-      this.apiService.getLogin(this.loginForm.getRawValue());
-    }
+    if (!this.loginForm.valid) return;
+
+    this.loading.set(true);
+    this.error.set(null);
+
+    this.apiService
+      .login(this.loginForm.getRawValue())
+      .pipe(takeUntilDestroyed(this.destroyRef))
+      .subscribe({
+        next: (response) => {
+          this.storage.setTokens(
+            response.accessToken,
+            response.refreshToken,
+            response.userId
+          );
+          this.router.navigate(['/home']);
+        },
+        error: () => {
+          this.error.set('Login failed. Please check your credentials.');
+          this.loading.set(false);
+        },
+      });
   }
 }
