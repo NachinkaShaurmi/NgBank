@@ -1,45 +1,36 @@
 import { inject, Injectable } from '@angular/core';
 import { HttpClient, HttpHeaders } from '@angular/common/http';
-import { Router } from '@angular/router';
 import { retry, Observable } from 'rxjs';
 import {
   ILogin,
   User,
   Account,
   CreateAccountDto,
+  LoginResponse,
 } from '../interfaces/interfaces';
+import { Storage } from './storage';
 
 @Injectable({
   providedIn: 'root',
 })
 export class ApiService {
   private readonly API_URL = 'https://be-12092025.onrender.com';
+
   private http: HttpClient = inject(HttpClient);
-  private router: Router = inject(Router);
+  public storage: Storage = inject(Storage);
 
   private getHeaders() {
-    const token =
-      localStorage.getItem('token') ||
-      'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOiI5ODcxZjFkNy1iNTc5LTRmZTMtOTg1Zi1kMjczMDY2MmNiZTQiLCJsb2dpbiI6ImpvaG5fZG9lIiwiaWF0IjoxNzU4NzI5Mjg2LCJleHAiOjE3NjEzMjEyODZ9.B5KpakPSBKAmpieaIDsMX35QirP_Xajvfoix7pdDzXQ';
+    const token = this.storage.getToken();
 
     return new HttpHeaders({
       Authorization: `Bearer ${token}`,
     });
   }
 
-  getLogin(prop: ILogin) {
-    this.http
-      .post(this.API_URL + '/auth/login', prop)
-      .pipe(retry(4))
-      .subscribe({
-        next: (response) => {
-          console.log(response);
-          this.router.navigate(['home']);
-        },
-        error: (error) => {
-          console.error('Login failed', error.status);
-        },
-      });
+  login(credentials: ILogin): Observable<LoginResponse> {
+    return this.http
+      .post<LoginResponse>(`${this.API_URL}/auth/login`, credentials)
+      .pipe(retry(3));
   }
 
   getUser(userId: string): Observable<User> {
