@@ -8,6 +8,8 @@ import {
   CreateAccountDto,
   LoginResponse,
   UpdateAccountDto,
+  CreateTransactionDto,
+  Transaction,
 } from '../../interfaces/interfaces';
 import { Storage } from '../storage/storage';
 
@@ -69,5 +71,23 @@ export class ApiService {
         headers: this.getHeaders(),
       }
     );
+  }
+
+  getAllUsers(): Observable<User[]> {
+    return this.http.get<User[]>(`${this.API_URL}/user`, {
+      headers: this.getHeaders(),
+    });
+  }
+
+  getAllAccounts(): Observable<Account[]> {
+    return this.http.get<Account[]>(`${this.API_URL}/account`, {
+      headers: this.getHeaders(),
+    });
+  }
+
+  createTransaction(data: CreateTransactionDto): Observable<Transaction> {
+    return this.http.post<Transaction>(`${this.API_URL}/transaction`, data, {
+      headers: this.getHeaders(),
+    });
   }
 }

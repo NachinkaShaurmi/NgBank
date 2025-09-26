@@ -1,11 +1,14 @@
 import { Component, inject, signal, computed, DestroyRef } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
 import { FormControl, Validators, ReactiveFormsModule } from '@angular/forms';
+import { MatDialog } from '@angular/material/dialog';
 import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
+import { switchMap } from 'rxjs';
 import { ApiService } from '../../services/api/api-service';
 import { Account } from '../../interfaces/interfaces';
 import { MaterialModule } from '../../material/material-module';
 import { CommonModule } from '@angular/common';
+import { CreateTransactionDialog } from '../create-transaction-dialog/create-transaction-dialog';
 
 @Component({
   selector: 'app-account',
@@ -16,6 +19,7 @@ import { CommonModule } from '@angular/common';
 export class AccountComponent {
   private readonly route = inject(ActivatedRoute);
   private readonly apiService = inject(ApiService);
+  private readonly dialog = inject(MatDialog);
   private readonly destroyRef = inject(DestroyRef);
 
   readonly account = signal<Account | null>(null);
@@ -97,5 +101,26 @@ export class AccountComponent {
   cancelEdit() {
     this.editingName.set(false);
     this.nameControl.setValue('');
+  }
+
+  onNewTransaction() {
+    const currentAccount = this.account();
+    if (!currentAccount) return;
+
+    this.dialog.open(CreateTransactionDialog, {
+      data: {
+        fromAccountId: currentAccount.id,
+        currency: currentAccount.currency
+      }
+    })
+    .afterClosed()
+    .pipe(
+      switchMap(result => result ? 
+        this.apiService.createTransaction(result) : 
+        []
+      ),
+      takeUntilDestroyed(this.destroyRef)
+    )
+    .subscribe(() => this.loadAccountData());
   }
 }

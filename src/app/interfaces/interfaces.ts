@@ -66,3 +66,9 @@ export interface AccountBasic {
 export interface UpdateAccountDto {
   name: string;
 }
+
+export interface CreateTransactionDto {
+  fromAccountId: string;
+  toAccountId: string;
+  amount: number;
+}
