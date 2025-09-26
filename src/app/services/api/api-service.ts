@@ -7,6 +7,7 @@ import {
   Account,
   CreateAccountDto,
   LoginResponse,
+  UpdateAccountDto,
 } from '../../interfaces/interfaces';
 import { Storage } from '../storage/storage';
 
@@ -49,5 +50,24 @@ export class ApiService {
     return this.http.post<Account>(`${this.API_URL}/account`, accountData, {
       headers: this.getHeaders(),
     });
+  }
+
+  getAccount(accountId: string): Observable<Account> {
+    return this.http.get<Account>(`${this.API_URL}/account/${accountId}`, {
+      headers: this.getHeaders(),
+    });
+  }
+
+  updateAccount(
+    accountId: string,
+    data: UpdateAccountDto
+  ): Observable<Account> {
+    return this.http.put<Account>(
+      `${this.API_URL}/account/${accountId}`,
+      data,
+      {
+        headers: this.getHeaders(),
+      }
+    );
   }
 }

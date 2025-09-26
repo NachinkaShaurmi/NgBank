@@ -19,9 +19,11 @@ export interface Account {
   userId: string;
   name: string;
   currency: 'EUR' | 'USD';
-  balance: number;
+  balance: string;
   createdAt: string;
   user: User;
+  outgoingTransactions?: TransactionWithAccount[];
+  incomingTransactions?: TransactionWithAccount[];
 }
 
 export interface CreateAccountDto {
@@ -35,4 +37,32 @@ export interface LoginResponse {
   accessToken: string;
   refreshToken: string;
   userId: string;
+}
+
+export interface Transaction {
+  id: string;
+  fromAccountId: string;
+  toAccountId: string;
+  userId: string;
+  amount: string;
+  date: string;
+}
+
+export interface TransactionWithAccount extends Transaction {
+  fromAccount?: AccountBasic;
+  toAccount?: AccountBasic;
+}
+
+export interface AccountBasic {
+  id: string;
+  userId: string;
+  name: string;
+  currency: 'EUR' | 'USD';
+  balance: string;
+  createdAt: string;
+  user: User;
+}
+
+export interface UpdateAccountDto {
+  name: string;
 }
