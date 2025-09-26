@@ -3,6 +3,9 @@
     <mat-icon>{{ navOpen() ? 'close' : 'menu' }}</mat-icon>
   </button>
   <span class="title">{{ title() }}</span>
+  <button mat-icon-button class="logout-btn" (click)="logout()">
+    <mat-icon>logout</mat-icon>
+  </button>
 </header>
 
 <div class="layout">

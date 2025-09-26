@@ -8,6 +8,7 @@
   color: var(--mat-sys-on-primary);
   display: flex;
   align-items: center;
+  justify-content: space-between;
   padding: 0 16px;
   z-index: 1000;
   box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
@@ -16,6 +17,12 @@
 .title {
   font-size: 20px;
   font-weight: 500;
+  flex: 1;
+  text-align: center;
+}
+
+.logout-btn {
+  color: var(--mat-sys-on-primary);
 }
 
 .menu-toggle {
