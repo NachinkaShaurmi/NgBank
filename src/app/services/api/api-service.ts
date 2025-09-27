@@ -7,6 +7,9 @@ import {
   Account,
   CreateAccountDto,
   LoginResponse,
+  UpdateAccountDto,
+  CreateTransactionDto,
+  Transaction,
 } from '../../interfaces/interfaces';
 import { Storage } from '../storage/storage';
 
@@ -47,6 +50,43 @@ export class ApiService {
 
   createAccount(accountData: CreateAccountDto): Observable<Account> {
     return this.http.post<Account>(`${this.API_URL}/account`, accountData, {
+      headers: this.getHeaders(),
+    });
+  }
+
+  getAccount(accountId: string): Observable<Account> {
+    return this.http.get<Account>(`${this.API_URL}/account/${accountId}`, {
+      headers: this.getHeaders(),
+    });
+  }
+
+  updateAccount(
+    accountId: string,
+    data: UpdateAccountDto
+  ): Observable<Account> {
+    return this.http.put<Account>(
+      `${this.API_URL}/account/${accountId}`,
+      data,
+      {
+        headers: this.getHeaders(),
+      }
+    );
+  }
+
+  getAllUsers(): Observable<User[]> {
+    return this.http.get<User[]>(`${this.API_URL}/user`, {
+      headers: this.getHeaders(),
+    });
+  }
+
+  getAllAccounts(): Observable<Account[]> {
+    return this.http.get<Account[]>(`${this.API_URL}/account`, {
+      headers: this.getHeaders(),
+    });
+  }
+
+  createTransaction(data: CreateTransactionDto): Observable<Transaction> {
+    return this.http.post<Transaction>(`${this.API_URL}/transaction`, data, {
       headers: this.getHeaders(),
     });
   }

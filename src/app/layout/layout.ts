@@ -4,9 +4,11 @@ import {
   HostListener,
   computed,
   effect,
+  inject,
 } from '@angular/core';
-import { RouterLink, RouterLinkActive, RouterOutlet } from '@angular/router';
+import { Router, RouterLink, RouterLinkActive, RouterOutlet } from '@angular/router';
 import { MaterialModule } from '../material/material-module';
+import { Storage } from '../services/storage/storage';
 
 @Component({
   selector: 'app-layout',
@@ -15,6 +17,9 @@ import { MaterialModule } from '../material/material-module';
   styleUrl: './layout.scss',
 })
 export class Layout {
+  private readonly router = inject(Router);
+  private readonly storage = inject(Storage);
+
   readonly title = signal('NgBank');
   readonly windowWidth = signal(window.innerWidth);
   readonly navOpen = signal(false);
@@ -38,5 +43,10 @@ export class Layout {
 
   closeNav(): void {
     this.navOpen.set(false);
+  }
+
+  logout(): void {
+    this.storage.clearTokens();
+    this.router.navigate(['/login']);
   }
 }

@@ -35,6 +35,15 @@ export const routes: Routes = [
         canActivate: [Auth],
         title: 'Profile',
       },
+      {
+        path: 'account/:id',
+        loadComponent: () =>
+          import('./components/account/account').then(
+            (r) => r.AccountComponent
+          ),
+        canActivate: [Auth],
+        title: 'Account Details',
+      },
     ],
   },
   {
