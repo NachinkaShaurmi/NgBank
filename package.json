@@ -5,6 +5,7 @@
     "ng": "ng",
     "start": "ng serve",
     "build": "ng build",
+    "build:redirect-fix": "ng build && echo '/*    /index.html   200' > dist/NgBank/browser/_redirects",
     "watch": "ng build --watch --configuration development",
     "test": "jest",
     "e2e": "playwright test",
