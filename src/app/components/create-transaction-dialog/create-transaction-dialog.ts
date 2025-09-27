@@ -29,7 +29,10 @@ export class CreateTransactionDialog {
   readonly transactionForm = this.fb.group({
     selectedUser: ['', Validators.required],
     toAccountId: [{ value: '', disabled: true }, Validators.required],
-    amount: [null, [Validators.required, Validators.min(0.01)]],
+    amount: [
+      null as number | null,
+      [Validators.required, Validators.min(0.01)],
+    ],
   });
 
   readonly filteredAccounts = computed(() => {
