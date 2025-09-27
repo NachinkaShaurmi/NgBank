@@ -5,8 +5,11 @@
     "ng": "ng",
     "start": "ng serve",
     "build": "ng build",
+    "build:redirect-fix": "ng build && echo '/*    /index.html   200' > dist/NgBank/browser/_redirects",
     "watch": "ng build --watch --configuration development",
     "test": "jest",
+    "e2e": "playwright test",
+    "e2e:ui": "playwright test --ui",
     "lint": "ng lint"
   },
   "prettier": {
@@ -37,6 +40,7 @@
     "@angular/cli": "^20.1.1",
     "@angular/compiler-cli": "^20.1.0",
     "@angular/platform-browser-dynamic": "^20.3.0",
+    "@playwright/test": "^1.55.1",
     "@types/jest": "^30.0.0",
     "angular-eslint": "20.3.0",
     "eslint": "^9.35.0",
