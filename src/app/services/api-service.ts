@@ -18,7 +18,7 @@ export class ApiService {
       .pipe(retry(4))
       .subscribe({
         next: (response) => {
-          console.log(response);
+          localStorage.setItem("response", JSON.stringify(response))
           this.router.navigate(['home']);
         },
         error: (error) => {

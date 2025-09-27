@@ -1,1 +1,65 @@
-<p>profile works!</p>
+
+
+<!-- Main Content -->
+<main class="app-main">
+  <div class="profile-container">
+    <!-- Left Column - Profile Info -->
+    <div class="profile-left">
+      <div class="profile-header">
+        <div class="profile-image">
+          <span class="material-symbols-outlined">account_circle</span>
+        </div>
+        <div class="profile-info">
+          <h1 class="profile-name">{{userData?.name}}</h1>
+          <p class="profile-title">Email: {{userData?.email}}</p>
+          <p class="profile-title">Balance: ${{userData?.balance}}</p>
+
+          <div class="change-password-small">
+
+            <form [formGroup]="userForm" >
+              <input
+                type="text"
+                formControlName="name"
+                placeholder="name"
+                [disabled]="isSubmitting"
+                class="small-input"
+              />
+              <input
+                type="password"
+                formControlName="oldPassword"
+                placeholder="oldPassword"
+                [disabled]="isSubmitting"
+                class="small-input"
+              />
+              <input
+                type="password"
+                formControlName="newPassword"
+                placeholder="newPassword"
+                [disabled]="isSubmitting"
+                class="small-input"
+              />
+            </form>
+
+
+            <button
+              (click)="onSend()"
+              class="small-button"
+            >
+              Send
+            </button>
+
+            @if (message) {
+              <p>{{ message }}</p>
+            }
+          </div>
+
+        </div>
+      </div>
+
+
+    </div>
+
+  </div>
+</main>
+
+
