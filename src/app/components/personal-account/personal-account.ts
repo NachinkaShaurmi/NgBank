@@ -1,6 +1,7 @@
 import { Component, DestroyRef, inject, signal } from '@angular/core';
 import { Router } from '@angular/router';
 import { MatDialog } from '@angular/material/dialog';
+import { TranslateModule } from '@ngx-translate/core';
 import { ApiService } from '../../services/api/api-service';
 import { User, Account } from '../../interfaces/interfaces';
 import { MaterialModule } from '../../material/material-module';
@@ -12,7 +13,7 @@ import { Storage } from '../../services/storage/storage';
 
 @Component({
   selector: 'app-personal-account',
-  imports: [MaterialModule, CommonModule],
+  imports: [MaterialModule, CommonModule, TranslateModule],
   templateUrl: './personal-account.html',
   styleUrl: './personal-account.scss',
 })

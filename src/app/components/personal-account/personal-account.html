@@ -2,7 +2,7 @@
   @if (loading()) {
     <div class="loading">
       <mat-progress-spinner diameter="50"></mat-progress-spinner>
-      <p>Loading...</p>
+      <p>{{ 'COMMON.LOADING' | translate }}</p>
     </div>
   } @else if (error()) {
     <div class="error">
@@ -13,24 +13,24 @@
     @if (user(); as userData) {
       <mat-card class="user-info">
         <mat-card-header>
-          <mat-card-title>Welcome, {{ userData.name }}</mat-card-title>
+          <mat-card-title>{{ 'HOME.WELCOME' | translate:{ name: userData.name } }}</mat-card-title>
           <mat-card-subtitle>{{ userData.email }}</mat-card-subtitle>
         </mat-card-header>
         <mat-card-content>
           <div class="user-details">
             <p><strong>Login:</strong> {{ userData.login }}</p>
-            <p><strong>Total Balance:</strong> ${{ userData.balance | number:'1.2-2' }}</p>
-            <p><strong>Member since:</strong> {{ userData.createdAt | date }}</p>
+            <p><strong>{{ 'HOME.TOTAL_BALANCE' | translate }}:</strong> ${{ userData.balance | number:'1.2-2' }}</p>
+            <p><strong>{{ 'HOME.MEMBER_SINCE' | translate }}:</strong> {{ userData.createdAt | date }}</p>
           </div>
         </mat-card-content>
       </mat-card>
     }
     <div class="accounts-section">
       <div class="section-header">
-        <h2>Your Accounts</h2>
+        <h2>{{ 'HOME.YOUR_ACCOUNTS' | translate }}</h2>
         <button mat-raised-button color="primary" (click)="onCreateAccount()">
           <mat-icon>add</mat-icon>
-          New Account
+          {{ 'HOME.NEW_ACCOUNT' | translate }}
         </button>
       </div>
 
@@ -38,7 +38,7 @@
         <mat-card class="no-accounts">
           <mat-card-content>
             <mat-icon>account_balance_wallet</mat-icon>
-            <p>No accounts found. Create your first account to get started!</p>
+            <p>{{ 'HOME.NO_ACCOUNTS' | translate }}</p>
           </mat-card-content>
         </mat-card>
       } @else {
@@ -54,7 +54,7 @@
                   <span class="balance-amount">{{ account.balance | number:'1.2-2' }}</span>
                   <span class="currency">{{ account.currency }}</span>
                 </div>
-                <p class="created-date">Created: {{ account.createdAt | date }}</p>
+                <p class="created-date">{{ 'HOME.CREATED' | translate }}: {{ account.createdAt | date }}</p>
               </mat-card-content>
               <mat-card-actions>
                 <mat-icon>arrow_forward</mat-icon>

@@ -2,12 +2,13 @@ import { Component, inject, signal, DestroyRef } from '@angular/core';
 import { FormBuilder, Validators, ReactiveFormsModule } from '@angular/forms';
 import { Router, RouterLink } from '@angular/router';
 import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
+import { TranslateModule, TranslateService } from '@ngx-translate/core';
 import { ApiService } from '../../services/api/api-service';
 import { Storage } from '../../services/storage/storage';
 
 @Component({
   selector: 'app-login',
-  imports: [ReactiveFormsModule, RouterLink],
+  imports: [ReactiveFormsModule, RouterLink, TranslateModule],
   templateUrl: './login-page.html',
   styleUrl: './login-page.scss',
 })
@@ -17,6 +18,7 @@ export class Login {
   private storage = inject(Storage);
   private router = inject(Router);
   private destroyRef = inject(DestroyRef);
+  private translate = inject(TranslateService);
 
   loading = signal(false);
   error = signal<string | null>(null);
@@ -45,7 +47,7 @@ export class Login {
           this.router.navigate(['/home']);
         },
         error: () => {
-          this.error.set('Login failed. Please check your credentials.');
+          this.error.set(this.translate.instant('AUTH.LOGIN_FAILED'));
           this.loading.set(false);
         },
       });

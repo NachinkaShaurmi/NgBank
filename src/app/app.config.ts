@@ -10,6 +10,7 @@ import {
   provideClientHydration,
   withEventReplay,
 } from '@angular/platform-browser';
+import { provideTranslateService } from '@ngx-translate/core';
 
 export const appConfig: ApplicationConfig = {
   providers: [
@@ -18,5 +19,6 @@ export const appConfig: ApplicationConfig = {
     provideRouter(routes),
     provideClientHydration(withEventReplay()),
     provideHttpClient(withFetch()),
+    provideTranslateService(),
   ],
 };

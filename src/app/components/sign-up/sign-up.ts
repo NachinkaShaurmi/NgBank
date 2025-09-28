@@ -7,11 +7,12 @@ import {
 } from '@angular/forms';
 import { Router, RouterLink } from '@angular/router';
 import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
+import { TranslateModule } from '@ngx-translate/core';
 import { UserService } from '../../services/user/user.service';
 
 @Component({
   selector: 'app-sign-up',
-  imports: [ReactiveFormsModule, RouterLink],
+  imports: [ReactiveFormsModule, RouterLink, TranslateModule],
   templateUrl: './sign-up.html',
   styleUrl: './sign-up.scss',
 })

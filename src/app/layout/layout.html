@@ -3,9 +3,14 @@
     <mat-icon>{{ navOpen() ? 'close' : 'menu' }}</mat-icon>
   </button>
   <span class="title">{{ title() }}</span>
-  <button mat-icon-button class="logout-btn" (click)="logout()">
-    <mat-icon>logout</mat-icon>
-  </button>
+  <div class="header-actions">
+    <button mat-icon-button class="language-btn" (click)="toggleLanguage()" [title]="currentLanguage() === 'en' ? 'Switch to Russian' : 'Переключить на английский'">
+      <span class="language-text">{{ currentLanguage().toUpperCase() }}</span>
+    </button>
+    <button mat-icon-button class="logout-btn" (click)="logout()" [title]="'NAVIGATION.LOGOUT' | translate">
+      <mat-icon>logout</mat-icon>
+    </button>
+  </div>
 </header>
 
 <div class="layout">
@@ -13,11 +18,11 @@
     <nav>
       <a routerLink="/home" routerLinkActive="active" class="nav-item">
         <mat-icon>home</mat-icon>
-        <span>Home</span>
+        <span>{{ 'NAVIGATION.HOME' | translate }}</span>
       </a>
       <a routerLink="/profile" routerLinkActive="active" class="nav-item">
         <mat-icon>person</mat-icon>
-        <span>Profile</span>
+        <span>{{ 'NAVIGATION.PROFILE' | translate }}</span>
       </a>
     </nav>
     
