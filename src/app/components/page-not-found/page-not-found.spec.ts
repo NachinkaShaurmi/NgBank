@@ -2,6 +2,7 @@ import { ComponentFixture, TestBed } from '@angular/core/testing';
 import { RouterTestingModule } from '@angular/router/testing';
 import { By } from '@angular/platform-browser';
 import { PageNotFound } from './page-not-found';
+import { provideTranslateService } from '@ngx-translate/core';
 
 describe('PageNotFound', () => {
   let component: PageNotFound;
@@ -10,6 +11,7 @@ describe('PageNotFound', () => {
   beforeEach(async () => {
     await TestBed.configureTestingModule({
       imports: [PageNotFound, RouterTestingModule],
+      providers: [provideTranslateService()],
     }).compileComponents();
 
     fixture = TestBed.createComponent(PageNotFound);
@@ -28,7 +30,9 @@ describe('PageNotFound', () => {
 
   it('should display error message', () => {
     const compiled = fixture.nativeElement as HTMLElement;
-    expect(compiled.textContent).toContain('Page does not exist');
+    expect(compiled.textContent).toContain(
+      '404ERRORS.PAGE_NOT_FOUND NAVIGATION.HOME'
+    );
   });
 
   it('should have home link', () => {
@@ -36,7 +40,7 @@ describe('PageNotFound', () => {
       By.css('a[routerLink="/home"]')
     );
     expect(linkElement).toBeTruthy();
-    expect(linkElement.nativeElement.textContent).toBe('Home');
+    expect(linkElement.nativeElement.textContent).toBe('NAVIGATION.HOME');
   });
 
   it('should have correct styling classes', () => {
@@ -49,7 +53,6 @@ describe('PageNotFound', () => {
     expect(compiled.querySelector('.number')).toBeTruthy();
     expect(compiled.querySelector('a')).toBeTruthy();
     expect(compiled.textContent).toContain('404');
-    expect(compiled.textContent).toContain('Home');
   });
 
   it('should have proper link attributes', () => {

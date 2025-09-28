@@ -5,6 +5,7 @@ import { of, throwError } from 'rxjs';
 import { AccountComponent } from './account';
 import { ApiService } from '../../services/api/api-service';
 import { Account } from '../../interfaces/interfaces';
+import { provideTranslateService } from '@ngx-translate/core';
 
 describe('AccountComponent', () => {
   let component: AccountComponent;
@@ -58,6 +59,7 @@ describe('AccountComponent', () => {
         { provide: ApiService, useValue: apiSpy },
         { provide: MatDialog, useValue: dialogSpy },
         { provide: ActivatedRoute, useValue: routeSpy },
+        provideTranslateService(),
       ],
     }).compileComponents();
 
