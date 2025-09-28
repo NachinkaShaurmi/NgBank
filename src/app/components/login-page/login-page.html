@@ -1,0 +1,11 @@
+<h1>{{ 'AUTH.SIGN_IN' | translate }}</h1>
+<form [formGroup]="loginForm">
+  <label>{{ 'AUTH.LOGIN' | translate }}:
+    <input formControlName="login" autocomplete="login"></label>
+  <label>{{ 'AUTH.PASSWORD' | translate }}:
+    <input formControlName="password" type="password" id="password" autocomplete="current-password"></label>
+  <button (click)="onSubmit()">{{ 'AUTH.SIGN_IN' | translate }}</button>
+</form>
+<div>
+  <p>{{ 'AUTH.NEW_USER' | translate }} <a routerLink="/sign-up">{{ 'AUTH.SIGN_UP' | translate }}</a></p>
+</div>

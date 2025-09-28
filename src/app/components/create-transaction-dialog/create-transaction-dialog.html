@@ -1,0 +1,35 @@
+<h1 mat-dialog-title>{{ 'TRANSACTION.NEW_TRANSACTION' | translate }}</h1>
+<div mat-dialog-content>
+  <form [formGroup]="transactionForm" class="transaction-form">
+    <mat-form-field appearance="outline">
+      <mat-label>{{ 'TRANSACTION.SELECT_USER' | translate }}</mat-label>
+      <mat-select formControlName="selectedUser">
+        @for (user of users(); track user.id) {
+          <mat-option [value]="user.id">{{ user.name }}</mat-option>
+        }
+      </mat-select>
+    </mat-form-field>
+    
+    <mat-form-field appearance="outline">
+      <mat-label>{{ 'TRANSACTION.SELECT_ACCOUNT' | translate }}</mat-label>
+      <mat-select formControlName="toAccountId">
+        @for (account of filteredAccounts(); track account.id) {
+          <mat-option [value]="account.id">{{ account.name || ('TRANSACTION.UNNAMED_ACCOUNT' | translate) }}</mat-option>
+        }
+      </mat-select>
+    </mat-form-field>
+    
+    <mat-form-field appearance="outline">
+      <mat-label>{{ 'TRANSACTION.AMOUNT' | translate }}</mat-label>
+      <input matInput type="number" formControlName="amount" placeholder="0.00">
+      <span matTextSuffix>{{ currency }}</span>
+      @if (amountErrors) {
+        <mat-error>{{ amountErrors }}</mat-error>
+      }
+    </mat-form-field>
+  </form>
+</div>
+<div mat-dialog-actions class="dialog-actions">
+  <button mat-button (click)="onCancel()">{{ 'COMMON.CANCEL' | translate }}</button>
+  <button mat-raised-button color="primary" (click)="onCreate()" [disabled]="!transactionForm.valid">{{ 'COMMON.SEND' | translate }}</button>
+</div>

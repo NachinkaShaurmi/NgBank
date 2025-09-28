@@ -1,0 +1,24 @@
+import { ComponentFixture, TestBed } from '@angular/core/testing';
+import { PersonalAccount } from './personal-account';
+import { provideHttpClient } from '@angular/common/http';
+import { provideTranslateService } from '@ngx-translate/core';
+
+describe('PersonalAccount', () => {
+  let component: PersonalAccount;
+  let fixture: ComponentFixture<PersonalAccount>;
+
+  beforeEach(async () => {
+    await TestBed.configureTestingModule({
+      imports: [PersonalAccount],
+      providers: [provideHttpClient(), provideTranslateService()],
+    }).compileComponents();
+
+    fixture = TestBed.createComponent(PersonalAccount);
+    component = fixture.componentInstance;
+    fixture.detectChanges();
+  });
+
+  it('should create', () => {
+    expect(component).toBeTruthy();
+  });
+});

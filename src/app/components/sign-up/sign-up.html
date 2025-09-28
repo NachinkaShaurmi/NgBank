@@ -1,0 +1,36 @@
+<div class="row">
+  <div class="col-md-4 offset-md-4 col-sm-6 offset-sm-3">
+    <div class="card auth">
+      <div class="card-body auth-card">
+        <div class="auth-avatar">
+          <img src="https://pluspng.com/img-png/user-png-icon-account-avatar-human-male-man-men-people-person-download-svg-download-png-edit-icon-512.png" alt="user" class="user-image">
+        </div>
+        <form [formGroup]="userForm" >
+          <div class="form-group">
+            <label for="name">{{ 'AUTH.NAME' | translate }} : </label>
+            <input formControlName="name" type="text" id="name" name="name" class="form-control" placeholder="name" >
+          </div>
+          <div class="form-group">
+            <label for="login">{{ 'AUTH.LOGIN' | translate }} : </label>
+            <input formControlName="login" type="text" id="login" name="login" class="form-control" placeholder="login" >
+          </div>
+          <div class="form-group">
+            <label for="email">{{ 'AUTH.EMAIL' | translate }} : </label>
+            <input formControlName="email" type="text" id="email" name="email" class="form-control" placeholder="Email" >
+          </div>
+          <div class="form-group">
+            <label for="password">{{ 'AUTH.PASSWORD' | translate }} : </label>
+            <input formControlName="password" type="password" id="password" name="c_password" class="form-control" placeholder="********" >
+          </div>
+          <div class="text-center">
+            <input (click)="submitUser()" type="submit" class="btn btn-my" [value]="'AUTH.SIGN_UP' | translate">
+          </div>
+          <div class="text-center login">
+            {{ 'AUTH.EXISTING_USER' | translate }} <a routerLink="/login">{{ 'AUTH.LOGIN_HERE' | translate }}</a>
+          </div>
+
+        </form>
+      </div>
+    </div>
+  </div>
+</div>

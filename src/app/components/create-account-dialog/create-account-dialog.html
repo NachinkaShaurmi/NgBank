@@ -1,0 +1,32 @@
+<h1 mat-dialog-title>{{ 'HOME.NEW_ACCOUNT' | translate }}</h1>
+<div mat-dialog-content class="dialog-content">
+  <form [formGroup]="accountForm">
+    <mat-form-field appearance="outline">
+      <mat-label>{{ 'ACCOUNT.ACCOUNT_NAME' | translate }}</mat-label>
+      <input matInput formControlName="name" placeholder="Enter account name">
+      @if (nameErrors) {
+        <mat-error>{{ nameErrors }}</mat-error>
+      }
+    </mat-form-field>
+    
+    <mat-form-field appearance="outline">
+      <mat-label>{{ 'ACCOUNT.CURRENCY' | translate }}</mat-label>
+      <mat-select formControlName="currency">
+        <mat-option value="USD">USD</mat-option>
+        <mat-option value="EUR">EUR</mat-option>
+      </mat-select>
+    </mat-form-field>
+    
+    <mat-form-field appearance="outline">
+      <mat-label>{{ 'ACCOUNT.INITIAL_BALANCE' | translate }}</mat-label>
+      <input matInput type="number" formControlName="balance" placeholder="0.00">
+      @if (balanceErrors) {
+        <mat-error>{{ balanceErrors }}</mat-error>
+      }
+    </mat-form-field>
+  </form>
+</div>
+<div mat-dialog-actions>
+  <button mat-button (click)="onCancel()">{{ 'COMMON.CANCEL' | translate }}</button>
+  <button mat-raised-button color="primary" (click)="onCreate()" [disabled]="!accountForm.valid">{{ 'COMMON.CREATE' | translate }}</button>
+</div>

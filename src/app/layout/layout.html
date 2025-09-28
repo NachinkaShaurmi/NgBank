@@ -1,0 +1,58 @@
+<header class="header">
+  <button mat-icon-button class="menu-toggle" (click)="toggleNav()" [class.hidden]="isDesktop()">
+    <mat-icon>{{ navOpen() ? 'close' : 'menu' }}</mat-icon>
+  </button>
+  <span class="title">{{ title() }}</span>
+  <div class="header-actions">
+    <button mat-icon-button class="language-btn" (click)="toggleLanguage()" [title]="currentLanguage() === 'en' ? 'Switch to Russian' : 'Переключить на английский'">
+      <span class="language-text">{{ currentLanguage().toUpperCase() }}</span>
+    </button>
+    <button mat-icon-button class="logout-btn" (click)="logout()" [title]="'NAVIGATION.LOGOUT' | translate">
+      <mat-icon>logout</mat-icon>
+    </button>
+  </div>
+</header>
+
+<div class="layout">
+  <aside class="nav" [class.open]="navOpen()" [class.desktop]="isDesktop()">
+    <nav>
+      <a routerLink="/home" routerLinkActive="active" class="nav-item">
+        <mat-icon>home</mat-icon>
+        <span>{{ 'NAVIGATION.HOME' | translate }}</span>
+      </a>
+      <a routerLink="/profile" routerLinkActive="active" class="nav-item">
+        <mat-icon>person</mat-icon>
+        <span>{{ 'NAVIGATION.PROFILE' | translate }}</span>
+      </a>
+    </nav>
+    
+    <footer class="footer">
+      <div class="footer-content">
+        <div class="authors">
+          <a href="https://github.com/nachinkashaurmi" target="_blank" rel="noopener">Iurii Oleinik</a>
+          <a href="https://github.com/pavelkonstantinovich" target="_blank" rel="noopener">Pavel Shkoda</a>
+          <a href="https://github.com/nshan20" target="_blank" rel="noopener">Nshan Antonyan</a>
+        </div>
+        <span class="year">&copy; 2025</span>
+        <a href="https://rs.school/courses/angular" target="_blank" rel="noopener" class="rs-link">
+          <img src="https://rs.school/_next/static/media/rss-logo.c19ce1b4.svg" alt="RS School logo" class="rs-logo">
+          Angular Course
+        </a>
+      </div>
+    </footer>
+  </aside>
+  
+  <main class="content">
+    <router-outlet />
+  </main>
+</div>
+
+<div
+  class="overlay" 
+  [class.show]="navOpen() && !isDesktop()" 
+  (click)="closeNav()"
+  (keyup.enter)="closeNav()"
+  (keyup.space)="closeNav()"
+  aria-label="Close navigation"
+  tabindex="0"
+></div>

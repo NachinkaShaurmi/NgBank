@@ -1,0 +1,86 @@
+<div class="account-page">
+  @if (loading()) {
+    <div class="loading">
+      <mat-progress-spinner diameter="50"></mat-progress-spinner>
+      <p>{{ 'COMMON.LOADING' | translate }}</p>
+    </div>
+  } @else if (error()) {
+    <div class="error">
+      <mat-icon>error</mat-icon>
+      <p>{{ error() }}</p>
+    </div>
+  } @else if (account(); as accountData) {
+    <mat-card class="account-info">
+      <mat-card-header>
+        <mat-card-title>
+          @if (editingName()) {
+            <mat-form-field appearance="outline">
+              <input matInput [formControl]="nameControl" (keyup.enter)="saveName()" (keyup.escape)="cancelEdit()">
+            </mat-form-field>
+            <button mat-icon-button (click)="saveName()" [disabled]="nameControl.invalid">
+              <mat-icon>check</mat-icon>
+            </button>
+            <button mat-icon-button (click)="cancelEdit()">
+              <mat-icon>close</mat-icon>
+            </button>
+          } @else {
+            <div class="account-name">
+              <span>{{ accountData.name }}</span>
+              <button mat-icon-button (click)="editName()">
+                <mat-icon>edit</mat-icon>
+              </button>
+            </div>
+          }
+        </mat-card-title>
+        <mat-card-subtitle>{{ accountData.currency }} Account</mat-card-subtitle>
+      </mat-card-header>
+      <mat-card-content>
+        <div class="balance">
+          <span class="balance-label">{{ 'ACCOUNT.CURRENT_BALANCE' | translate }}</span>
+          <span class="balance-amount">{{ +accountData.balance | number:'1.2-2' }} {{ accountData.currency }}</span>
+        </div>
+        <p><strong>{{ 'HOME.CREATED' | translate }}:</strong> {{ accountData.createdAt | date }}</p>
+      </mat-card-content>
+    </mat-card>
+
+    <button matButton="filled" (click)="onNewTransaction()">
+      <mat-icon>add</mat-icon>
+      {{ 'ACCOUNT.NEW_TRANSACTION' | translate }}
+    </button>
+
+    <mat-card class="transactions">
+      <mat-card-header>
+        <mat-card-title class="history-title">{{ 'ACCOUNT.TRANSACTION_HISTORY' | translate }}</mat-card-title>
+      </mat-card-header>
+      <mat-card-content>
+        @if (transactions().length === 0) {
+          <div class="no-transactions">
+            <mat-icon>receipt_long</mat-icon>
+            <p>{{ 'ACCOUNT.NO_TRANSACTIONS' | translate }}</p>
+          </div>
+        } @else {
+          <div class="transaction-list">
+            @for (transaction of transactions(); track transaction.id) {
+              <div class="transaction-item">
+                <div class="transaction-info">
+                  <span class="transaction-type">
+                    {{ transaction.fromAccountId === accountData.id ? ('ACCOUNT.SENT_TO' | translate) : ('ACCOUNT.RECEIVED_FROM' | translate) }}
+                    {{ transaction.fromAccountId === accountData.id ? 
+                        (transaction.toAccount?.user?.name || 'Unknown User') : 
+                        (transaction.fromAccount?.user?.name || 'Unknown User') }}
+                  </span>
+                  <span class="transaction-date">{{ transaction.date | date }}</span>
+                </div>
+                <span class="transaction-amount" 
+                      [class.negative]="transaction.fromAccountId === accountData.id"
+                      [class.positive]="transaction.toAccountId === accountData.id">
+                  {{ transaction.fromAccountId === accountData.id ? '-' : '+' }}{{ +transaction.amount | number:'1.2-2' }} {{ accountData.currency }}
+                </span>
+              </div>
+            }
+          </div>
+        }
+      </mat-card-content>
+    </mat-card>
+  }
+</div>
