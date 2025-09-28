@@ -21,6 +21,25 @@
   text-align: center;
 }
 
+.header-actions {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.language-btn {
+  color: var(--mat-sys-on-primary);
+  min-width: 40px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  .language-text {
+    font-size: 16px;
+    font-weight: 500;
+  }
+}
+
 .logout-btn {
   color: var(--mat-sys-on-primary);
 }

@@ -1,4 +1,5 @@
 import { Injectable } from '@angular/core';
+import { AvailableLanguage } from '../../interfaces/interfaces';
 
 @Injectable({
   providedIn: 'root',
@@ -26,5 +27,13 @@ export class Storage {
     localStorage.removeItem('token');
     localStorage.removeItem('refreshToken');
     localStorage.removeItem('userId');
+  }
+
+  getLanguage(): AvailableLanguage {
+    return (localStorage.getItem('language') as AvailableLanguage) ?? 'en';
+  }
+
+  setLanguage(lang: AvailableLanguage): void {
+    localStorage.setItem('language', lang);
   }
 }

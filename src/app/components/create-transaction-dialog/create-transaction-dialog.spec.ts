@@ -4,6 +4,7 @@ import { of } from 'rxjs';
 import { CreateTransactionDialog } from './create-transaction-dialog';
 import { ApiService } from '../../services/api/api-service';
 import { Account } from '../../interfaces/interfaces';
+import { provideTranslateService } from '@ngx-translate/core';
 
 describe('CreateTransactionDialog', () => {
   let component: CreateTransactionDialog;
@@ -51,6 +52,7 @@ describe('CreateTransactionDialog', () => {
           useValue: { fromAccountId: 'acc-1', currency: 'EUR' },
         },
         { provide: ApiService, useValue: apiSpy },
+        provideTranslateService(),
       ],
     }).compileComponents();
 

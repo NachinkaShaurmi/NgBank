@@ -6,19 +6,33 @@ import {
   effect,
   inject,
 } from '@angular/core';
-import { Router, RouterLink, RouterLinkActive, RouterOutlet } from '@angular/router';
+import {
+  Router,
+  RouterLink,
+  RouterLinkActive,
+  RouterOutlet,
+} from '@angular/router';
+import { TranslateModule } from '@ngx-translate/core';
 import { MaterialModule } from '../material/material-module';
 import { Storage } from '../services/storage/storage';
+import { TranslationService } from '../services/translation/translation.service';
 
 @Component({
   selector: 'app-layout',
-  imports: [RouterOutlet, MaterialModule, RouterLink, RouterLinkActive],
+  imports: [
+    RouterOutlet,
+    MaterialModule,
+    RouterLink,
+    RouterLinkActive,
+    TranslateModule,
+  ],
   templateUrl: './layout.html',
   styleUrl: './layout.scss',
 })
 export class Layout {
   private readonly router = inject(Router);
   private readonly storage = inject(Storage);
+  private readonly translationService = inject(TranslationService);
 
   readonly title = signal('NgBank');
   readonly windowWidth = signal(window.innerWidth);
@@ -48,5 +62,13 @@ export class Layout {
   logout(): void {
     this.storage.clearTokens();
     this.router.navigate(['/login']);
+  }
+
+  toggleLanguage(): void {
+    this.translationService.toggleLanguage();
+  }
+
+  get currentLanguage() {
+    return this.translationService.currentLanguage;
   }
 }

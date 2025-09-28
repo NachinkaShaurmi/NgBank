@@ -1,0 +1,64 @@
+{
+  "COMMON": {
+    "LOADING": "Loading...",
+    "ERROR": "Error",
+    "CANCEL": "Cancel",
+    "SAVE": "Save",
+    "CREATE": "Create",
+    "EDIT": "Edit",
+    "DELETE": "Delete",
+    "CLOSE": "Close",
+    "SEND": "Send"
+  },
+  "NAVIGATION": {
+    "HOME": "Home",
+    "PROFILE": "Profile",
+    "LOGOUT": "Logout"
+  },
+  "AUTH": {
+    "SIGN_IN": "Sign In",
+    "SIGN_UP": "Sign Up",
+    "LOGIN": "Login",
+    "PASSWORD": "Password",
+    "NAME": "Name",
+    "EMAIL": "Email",
+    "NEW_USER": "I'm a new user.",
+    "EXISTING_USER": "Already have an account?",
+    "LOGIN_HERE": "Login here",
+    "LOGIN_FAILED": "Login failed. Please check your credentials.",
+    "SIGNUP_FAILED": "Sign up failed"
+  },
+  "HOME": {
+    "WELCOME": "Welcome, {{name}}",
+    "YOUR_ACCOUNTS": "Your Accounts",
+    "NEW_ACCOUNT": "New Account",
+    "NO_ACCOUNTS": "No accounts found. Create your first account to get started!",
+    "TOTAL_BALANCE": "Total Balance",
+    "MEMBER_SINCE": "Member since",
+    "CREATED": "Created"
+  },
+  "ACCOUNT": {
+    "ACCOUNT_NAME": "Account Name",
+    "CURRENCY": "Currency",
+    "INITIAL_BALANCE": "Initial Balance",
+    "CURRENT_BALANCE": "Current Balance",
+    "NEW_TRANSACTION": "New Transaction",
+    "TRANSACTION_HISTORY": "Transaction History",
+    "NO_TRANSACTIONS": "No transactions found",
+    "SENT_TO": "Sent to",
+    "RECEIVED_FROM": "Received from",
+    "FAILED_TO_LOAD": "Failed to load account data",
+    "FAILED_TO_UPDATE": "Failed to update account name"
+  },
+  "TRANSACTION": {
+    "NEW_TRANSACTION": "New Transaction",
+    "SELECT_USER": "Select User",
+    "SELECT_ACCOUNT": "Select Account",
+    "AMOUNT": "Amount",
+    "UNNAMED_ACCOUNT": "Unnamed Account"
+  },
+  "ERRORS": {
+    "PAGE_NOT_FOUND": "Page does not exist.",
+    "FAILED_TO_LOAD_DATA": "Failed to load data"
+  }
+}

@@ -3,6 +3,7 @@ import { provideHttpClient } from '@angular/common/http';
 import { provideRouter } from '@angular/router';
 
 import { Login } from './login-page';
+import { provideTranslateService } from '@ngx-translate/core';
 
 describe('LoginPage', () => {
   let component: Login;
@@ -11,7 +12,11 @@ describe('LoginPage', () => {
   beforeEach(async () => {
     await TestBed.configureTestingModule({
       imports: [Login],
-      providers: [provideHttpClient(), provideRouter([])],
+      providers: [
+        provideHttpClient(),
+        provideRouter([]),
+        provideTranslateService(),
+      ],
     }).compileComponents();
 
     fixture = TestBed.createComponent(Login);

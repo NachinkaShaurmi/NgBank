@@ -1,6 +1,7 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 import { MatDialogRef } from '@angular/material/dialog';
 import { CreateAccountDialog } from './create-account-dialog';
+import { provideTranslateService } from '@ngx-translate/core';
 
 describe('CreateAccountDialog', () => {
   let component: CreateAccountDialog;
@@ -12,7 +13,10 @@ describe('CreateAccountDialog', () => {
 
     await TestBed.configureTestingModule({
       imports: [CreateAccountDialog],
-      providers: [{ provide: MatDialogRef, useValue: dialogRefSpy }],
+      providers: [
+        { provide: MatDialogRef, useValue: dialogRefSpy },
+        provideTranslateService(),
+      ],
     }).compileComponents();
 
     fixture = TestBed.createComponent(CreateAccountDialog);

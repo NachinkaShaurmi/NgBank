@@ -4,6 +4,7 @@ import { FormControl, Validators, ReactiveFormsModule } from '@angular/forms';
 import { MatDialog } from '@angular/material/dialog';
 import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
 import { switchMap } from 'rxjs';
+import { TranslateModule } from '@ngx-translate/core';
 import { ApiService } from '../../services/api/api-service';
 import { Account } from '../../interfaces/interfaces';
 import { MaterialModule } from '../../material/material-module';
@@ -12,7 +13,7 @@ import { CreateTransactionDialog } from '../create-transaction-dialog/create-tra
 
 @Component({
   selector: 'app-account',
-  imports: [MaterialModule, CommonModule, ReactiveFormsModule],
+  imports: [MaterialModule, CommonModule, ReactiveFormsModule, TranslateModule],
   templateUrl: './account.html',
   styleUrl: './account.scss',
 })

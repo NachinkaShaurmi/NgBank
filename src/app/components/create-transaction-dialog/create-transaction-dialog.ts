@@ -2,13 +2,14 @@ import { Component, inject, signal, computed, DestroyRef } from '@angular/core';
 import { FormBuilder, Validators, ReactiveFormsModule } from '@angular/forms';
 import { MatDialogRef, MAT_DIALOG_DATA } from '@angular/material/dialog';
 import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
+import { TranslateModule } from '@ngx-translate/core';
 import { MaterialModule } from '../../material/material-module';
 import { ApiService } from '../../services/api/api-service';
 import { User, Account } from '../../interfaces/interfaces';
 
 @Component({
   selector: 'app-create-transaction-dialog',
-  imports: [MaterialModule, ReactiveFormsModule],
+  imports: [MaterialModule, ReactiveFormsModule, TranslateModule],
   templateUrl: './create-transaction-dialog.html',
   styleUrl: './create-transaction-dialog.scss',
 })

@@ -72,3 +72,5 @@ export interface CreateTransactionDto {
   toAccountId: string;
   amount: number;
 }
+
+export type AvailableLanguage = 'en' | 'ru';
