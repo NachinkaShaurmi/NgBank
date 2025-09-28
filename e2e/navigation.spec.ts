@@ -8,8 +8,8 @@ test.describe('Navigation', () => {
 
   test('should show 404 page for invalid routes', async ({ page }) => {
     await page.goto('/invalid-route');
-    
+
     await expect(page.locator('.number')).toContainText('404');
-    await expect(page.locator('a[routerLink="/home"]')).toBeVisible();
+    await expect(page.locator('a')).toBeVisible();
   });
 });

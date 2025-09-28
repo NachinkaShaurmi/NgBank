@@ -1,13 +1,14 @@
-import { Component, DestroyRef, inject, signal } from '@angular/core';
+import { Component, DestroyRef, inject, signal, computed } from '@angular/core';
+import { toSignal } from '@angular/core/rxjs-interop';
 import { Router } from '@angular/router';
 import { MatDialog } from '@angular/material/dialog';
 import { TranslateModule } from '@ngx-translate/core';
 import { ApiService } from '../../services/api/api-service';
-import { User, Account } from '../../interfaces/interfaces';
+import { Account } from '../../interfaces/interfaces';
 import { MaterialModule } from '../../material/material-module';
 import { CommonModule } from '@angular/common';
 import { CreateAccountDialog } from '../create-account-dialog/create-account-dialog';
-import { switchMap, forkJoin } from 'rxjs';
+import { switchMap } from 'rxjs';
 import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
 import { Storage } from '../../services/storage/storage';
 
@@ -24,35 +25,16 @@ export class PersonalAccount {
   private storage = inject(Storage);
 
   private userId = this.storage.getUserId();
-  readonly user = signal<User | null>(null);
-  readonly accounts = signal<Account[]>([]);
-  readonly loading = signal(true);
+  readonly user = toSignal(this.apiService.getUser(this.userId));
+  readonly accounts = signal<Account[] | null>(null);
+  readonly loading = computed(() => !this.user() || this.accounts() === null);
   readonly error = signal<string | null>(null);
 
   constructor() {
-    this.loadData();
+    this.loadAccounts();
   }
 
   private destroyRef = inject(DestroyRef);
-
-  private loadData() {
-    forkJoin({
-      user: this.apiService.getUser(this.userId),
-      accounts: this.apiService.getUserAccounts(this.userId),
-    })
-      .pipe(takeUntilDestroyed())
-      .subscribe({
-        next: ({ user, accounts }) => {
-          this.user.set(user);
-          this.accounts.set(accounts);
-          this.loading.set(false);
-        },
-        error: () => {
-          this.error.set('Failed to load data');
-          this.loading.set(false);
-        },
-      });
-  }
 
   private loadAccounts() {
     this.apiService
@@ -80,6 +62,8 @@ export class PersonalAccount {
         ),
         takeUntilDestroyed(this.destroyRef)
       )
-      .subscribe(() => this.loadAccounts());
+      .subscribe(() => {
+        this.loadAccounts();
+      });
   }
 }

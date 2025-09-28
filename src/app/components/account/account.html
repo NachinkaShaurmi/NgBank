@@ -69,7 +69,7 @@
                         (transaction.toAccount?.user?.name || 'Unknown User') : 
                         (transaction.fromAccount?.user?.name || 'Unknown User') }}
                   </span>
-                  <span class="transaction-date">{{ transaction.date | date:'short' }}</span>
+                  <span class="transaction-date">{{ transaction.date | date }}</span>
                 </div>
                 <span class="transaction-amount" 
                       [class.negative]="transaction.fromAccountId === accountData.id"

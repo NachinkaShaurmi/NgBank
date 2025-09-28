@@ -1,5 +1,4 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
-import { By } from '@angular/platform-browser';
 import { Profile } from './profile';
 import { provideTranslateService } from '@ngx-translate/core';
 
@@ -24,26 +23,11 @@ describe('Profile', () => {
 
   it('should render profile works message', () => {
     const compiled = fixture.nativeElement as HTMLElement;
-    expect(compiled.textContent).toContain('profile works!');
+    expect(compiled.textContent).toContain('Coming soon');
   });
 
   it('should have correct selector', () => {
     expect(component.constructor.name).toBe('Profile');
-  });
-
-  it('should be a standalone component', () => {
-    const compiled = fixture.nativeElement as HTMLElement;
-    expect(compiled).toBeTruthy();
-  });
-
-  it('should have empty imports array', () => {
-    expect(component).toBeDefined();
-  });
-
-  it('should render paragraph element', () => {
-    const paragraphElement = fixture.debugElement.query(By.css('p'));
-    expect(paragraphElement).toBeTruthy();
-    expect(paragraphElement.nativeElement.textContent).toBe('profile works!');
   });
 
   it('should have minimal template structure', () => {

@@ -1,5 +1,5 @@
 import { inject, Injectable } from '@angular/core';
-import { HttpClient, HttpHeaders } from '@angular/common/http';
+import { HttpClient } from '@angular/common/http';
 import { retry, Observable } from 'rxjs';
 import {
   ILogin,
@@ -22,14 +22,6 @@ export class ApiService {
   private http: HttpClient = inject(HttpClient);
   public storage: Storage = inject(Storage);
 
-  private getHeaders() {
-    const token = this.storage.getToken();
-
-    return new HttpHeaders({
-      Authorization: `Bearer ${token}`,
-    });
-  }
-
   login(credentials: ILogin): Observable<LoginResponse> {
     return this.http
       .post<LoginResponse>(`${this.API_URL}/auth/login`, credentials)
@@ -37,57 +29,37 @@ export class ApiService {
   }
 
   getUser(userId: string): Observable<User> {
-    return this.http.get<User>(`${this.API_URL}/user/${userId}`, {
-      headers: this.getHeaders(),
-    });
+    return this.http.get<User>(`${this.API_URL}/user/${userId}`);
   }
 
   getUserAccounts(userId: string): Observable<Account[]> {
-    return this.http.get<Account[]>(`${this.API_URL}/account/user/${userId}`, {
-      headers: this.getHeaders(),
-    });
+    return this.http.get<Account[]>(`${this.API_URL}/account/user/${userId}`);
   }
 
   createAccount(accountData: CreateAccountDto): Observable<Account> {
-    return this.http.post<Account>(`${this.API_URL}/account`, accountData, {
-      headers: this.getHeaders(),
-    });
+    return this.http.post<Account>(`${this.API_URL}/account`, accountData);
   }
 
   getAccount(accountId: string): Observable<Account> {
-    return this.http.get<Account>(`${this.API_URL}/account/${accountId}`, {
-      headers: this.getHeaders(),
-    });
+    return this.http.get<Account>(`${this.API_URL}/account/${accountId}`);
   }
 
   updateAccount(
     accountId: string,
     data: UpdateAccountDto
   ): Observable<Account> {
-    return this.http.put<Account>(
-      `${this.API_URL}/account/${accountId}`,
-      data,
-      {
-        headers: this.getHeaders(),
-      }
-    );
+    return this.http.put<Account>(`${this.API_URL}/account/${accountId}`, data);
   }
 
   getAllUsers(): Observable<User[]> {
-    return this.http.get<User[]>(`${this.API_URL}/user`, {
-      headers: this.getHeaders(),
-    });
+    return this.http.get<User[]>(`${this.API_URL}/user`);
   }
 
   getAllAccounts(): Observable<Account[]> {
-    return this.http.get<Account[]>(`${this.API_URL}/account`, {
-      headers: this.getHeaders(),
-    });
+    return this.http.get<Account[]>(`${this.API_URL}/account`);
   }
 
   createTransaction(data: CreateTransactionDto): Observable<Transaction> {
-    return this.http.post<Transaction>(`${this.API_URL}/transaction`, data, {
-      headers: this.getHeaders(),
-    });
+    return this.http.post<Transaction>(`${this.API_URL}/transaction`, data);
   }
 }

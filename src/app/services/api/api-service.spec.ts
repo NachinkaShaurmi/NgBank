@@ -71,7 +71,6 @@ describe('ApiService', () => {
       'https://be-12092025.onrender.com/user/user-123'
     );
     expect(req.request.method).toBe('GET');
-    expect(req.request.headers.get('Authorization')).toBe('Bearer test-token');
     req.flush(mockUser);
   });
 

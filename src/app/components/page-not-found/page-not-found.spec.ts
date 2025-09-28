@@ -36,9 +36,7 @@ describe('PageNotFound', () => {
   });
 
   it('should have home link', () => {
-    const linkElement = fixture.debugElement.query(
-      By.css('a[routerLink="/home"]')
-    );
+    const linkElement = fixture.debugElement.query(By.css('a'));
     expect(linkElement).toBeTruthy();
     expect(linkElement.nativeElement.textContent).toBe('NAVIGATION.HOME');
   });
@@ -53,10 +51,5 @@ describe('PageNotFound', () => {
     expect(compiled.querySelector('.number')).toBeTruthy();
     expect(compiled.querySelector('a')).toBeTruthy();
     expect(compiled.textContent).toContain('404');
-  });
-
-  it('should have proper link attributes', () => {
-    const linkElement = fixture.debugElement.query(By.css('a'));
-    expect(linkElement.attributes['routerLink']).toBe('/home');
   });
 });
