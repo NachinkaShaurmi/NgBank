@@ -1,5 +1,5 @@
-import { Component } from '@angular/core';
-import { RouterLink } from '@angular/router';
+import { Component, inject } from '@angular/core';
+import { RouterLink, ActivatedRoute } from '@angular/router';
 import { TranslateModule } from '@ngx-translate/core';
 
 @Component({
@@ -8,4 +8,10 @@ import { TranslateModule } from '@ngx-translate/core';
   templateUrl: './page-not-found.html',
   styleUrl: './page-not-found.scss',
 })
-export class PageNotFound {}
+export class PageNotFound {
+  private route = inject(ActivatedRoute);
+
+  get redirectPath() {
+    return this.route.snapshot.data['redirectTo'] || '/home';
+  }
+}

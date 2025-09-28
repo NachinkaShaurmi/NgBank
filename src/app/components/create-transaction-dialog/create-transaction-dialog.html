@@ -23,6 +23,9 @@
       <mat-label>{{ 'TRANSACTION.AMOUNT' | translate }}</mat-label>
       <input matInput type="number" formControlName="amount" placeholder="0.00">
       <span matTextSuffix>{{ currency }}</span>
+      @if (amountErrors) {
+        <mat-error>{{ amountErrors }}</mat-error>
+      }
     </mat-form-field>
   </form>
 </div>

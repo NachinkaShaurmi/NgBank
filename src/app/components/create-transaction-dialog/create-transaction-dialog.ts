@@ -1,11 +1,19 @@
-import { Component, inject, signal, computed, DestroyRef } from '@angular/core';
+import {
+  Component,
+  inject,
+  signal,
+  computed,
+  DestroyRef,
+  input,
+} from '@angular/core';
+import { toSignal } from '@angular/core/rxjs-interop';
 import { FormBuilder, Validators, ReactiveFormsModule } from '@angular/forms';
 import { MatDialogRef, MAT_DIALOG_DATA } from '@angular/material/dialog';
 import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
 import { TranslateModule } from '@ngx-translate/core';
 import { MaterialModule } from '../../material/material-module';
 import { ApiService } from '../../services/api/api-service';
-import { User, Account } from '../../interfaces/interfaces';
+import { Account } from '../../interfaces/interfaces';
 
 @Component({
   selector: 'app-create-transaction-dialog',
@@ -23,7 +31,12 @@ export class CreateTransactionDialog {
     currency: string;
   };
 
-  readonly users = signal<User[]>([]);
+  readonly dialogFromAccountId = input<string>();
+  readonly dialogCurrency = input<string>();
+
+  readonly users = toSignal(this.apiService.getAllUsers(), {
+    initialValue: [],
+  });
   readonly accounts = signal<Account[]>([]);
   readonly currency: string;
 
@@ -32,9 +45,19 @@ export class CreateTransactionDialog {
     toAccountId: [{ value: '', disabled: true }, Validators.required],
     amount: [
       null as number | null,
-      [Validators.required, Validators.min(0.01)],
+      [Validators.required, Validators.min(0.01), Validators.max(100000)],
     ],
   });
+
+  get amountErrors() {
+    const control = this.transactionForm.get('amount');
+    if (control?.errors && control.touched) {
+      if (control.errors['required']) return 'Amount is required';
+      if (control.errors['min']) return 'Amount must be at least 0.01';
+      if (control.errors['max']) return 'Amount cannot exceed 100,000';
+    }
+    return null;
+  }
 
   readonly filteredAccounts = computed(() => {
     return this.accounts().filter(
@@ -46,19 +69,7 @@ export class CreateTransactionDialog {
 
   constructor() {
     this.currency = this.data.currency;
-    this.loadData();
     this.setupFormSubscriptions();
-  }
-
-  private loadData() {
-    this.apiService
-      .getAllUsers()
-      .pipe(takeUntilDestroyed(this.destroyRef))
-      .subscribe({
-        next: (users) => {
-          this.users.set(users);
-        },
-      });
   }
 
   private setupFormSubscriptions() {

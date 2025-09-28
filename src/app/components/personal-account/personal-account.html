@@ -34,7 +34,7 @@
         </button>
       </div>
 
-      @if (accounts().length === 0) {
+      @if (accounts()?.length === 0) {
         <mat-card class="no-accounts">
           <mat-card-content>
             <mat-icon>account_balance_wallet</mat-icon>
@@ -43,7 +43,7 @@
         </mat-card>
       } @else {
         <div class="accounts-grid">
-          @for (account of accounts(); track account.id) {
+          @for (account of accounts() || []; track account.id) {
             <mat-card class="account-card" (click)="onAccountClick(account.id)">
               <mat-card-header>
                 <mat-card-title>{{ account.name || 'Unknown' }}</mat-card-title>

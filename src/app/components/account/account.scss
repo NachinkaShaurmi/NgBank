@@ -152,6 +152,16 @@
   .account-info .balance .balance-amount {
     font-size: 24px;
   }
+
+  .transaction-item {
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 8px;
+
+    .transaction-amount {
+      align-self: flex-end;
+    }
+  }
 }
 
 .account-name {

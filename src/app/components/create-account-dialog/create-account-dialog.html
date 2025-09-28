@@ -4,6 +4,9 @@
     <mat-form-field appearance="outline">
       <mat-label>{{ 'ACCOUNT.ACCOUNT_NAME' | translate }}</mat-label>
       <input matInput formControlName="name" placeholder="Enter account name">
+      @if (nameErrors) {
+        <mat-error>{{ nameErrors }}</mat-error>
+      }
     </mat-form-field>
     
     <mat-form-field appearance="outline">
@@ -17,6 +20,9 @@
     <mat-form-field appearance="outline">
       <mat-label>{{ 'ACCOUNT.INITIAL_BALANCE' | translate }}</mat-label>
       <input matInput type="number" formControlName="balance" placeholder="0.00">
+      @if (balanceErrors) {
+        <mat-error>{{ balanceErrors }}</mat-error>
+      }
     </mat-form-field>
   </form>
 </div>

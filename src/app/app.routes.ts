@@ -53,5 +53,6 @@ export const routes: Routes = [
         (r) => r.PageNotFound
       ),
     title: 'Page 404',
+    data: { redirectTo: '/home' },
   },
 ];

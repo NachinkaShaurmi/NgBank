@@ -185,3 +185,49 @@
   height: 16px;
   width: auto;
 }
+
+@media (max-width: 768px) {
+  .header {
+    padding: 0 12px;
+  }
+
+  .title {
+    font-size: 18px;
+  }
+
+  .content {
+    padding: 16px;
+  }
+
+  .nav {
+    width: 280px;
+  }
+
+  .footer {
+    padding: 12px;
+    font-size: 11px;
+  }
+
+  .authors {
+    flex-direction: column;
+    gap: 4px;
+  }
+}
+
+@media (max-width: 480px) {
+  .header {
+    padding: 0 8px;
+  }
+
+  .title {
+    font-size: 16px;
+  }
+
+  .content {
+    padding: 12px;
+  }
+
+  .nav {
+    width: 100vw;
+  }
+}
